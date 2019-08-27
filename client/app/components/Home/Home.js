@@ -17,6 +17,8 @@ class Home extends Component {
       signInError: '',
       signInEmail: '',
       signInPassword: '',
+      signUpFirstName: '',
+      signUpLastName:'',
       signUpEmail: '',
       signUpPassword: '',
     };
@@ -25,7 +27,8 @@ class Home extends Component {
     this.onTextboxChangeSignInPassword = this.onTextboxChangeSignInPassword.bind(this);
     this.onTextboxChangeSignUpEmail = this.onTextboxChangeSignUpEmail.bind(this);
     this.onTextboxChangeSignUpPassword = this.onTextboxChangeSignUpPassword.bind(this);
-    
+    this.onTextboxChangeSignUpFirstName = this.onTextboxChangeSignUpFirstName.bind(this);
+    this.onTextboxChangeSignUpLastName = this.onTextboxChangeSignUpLastName.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.logout = this.logout.bind(this);
@@ -81,9 +84,24 @@ class Home extends Component {
     });
   }
 
+  onTextboxChangeSignUpFirstName(event) {
+    this.setState({
+      signUpFirstName: event.target.value,
+    });
+  }
+
+  onTextboxChangeSignUpLastName(event) {
+    this.setState({
+      signUpLastName: event.target.value,
+    });
+  }
+
+
   onSignUp() {
     // Grab state
     const {
+      signUpFirstName,
+      signUpLastName,
       signUpEmail,
       signUpPassword,
     } = this.state;
@@ -99,6 +117,8 @@ class Home extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        firstName: signUpFirstName,
+        lastName: signUpLastName,
         email: signUpEmail,
         password: signUpPassword,
       }),
@@ -111,6 +131,8 @@ class Home extends Component {
             isLoading: false,
             signUpEmail: '',
             signUpPassword: '',
+            signUpFirstName: '',
+            signUpLastName: '',
           });
         } else {
           this.setState({
@@ -201,6 +223,8 @@ class Home extends Component {
       signInPassword,
       signUpEmail,
       signUpPassword,
+      signUpFirstName,
+      signUpLastName,
       signUpError,
     } = this.state;
 
@@ -243,6 +267,18 @@ class Home extends Component {
               ) : (null)
             }
             <p>Sign Up</p>
+            <input
+              type="text"
+              placeholder="First Name"
+              value={signUpFirstName}
+              onChange={this.onTextboxChangeSignUpFirstName}
+            /><br />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={signUpLastName}
+              onChange={this.onTextboxChangeSignUpLastName}
+            /><br />
             <input
               type="email"
               placeholder="Email"
